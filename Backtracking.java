@@ -1,3 +1,5 @@
+//Will Keller
+//CS 375 Presentation
 
 public class Backtracking {
 	public Item[] items;

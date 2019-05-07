@@ -1,40 +1,51 @@
+//Will Keller
+//CS 375 Presentation
+
 import java.util.*;
 
 public class Driver {
 	
 	public static void main(String[] args) {
-		
-		int seed = 1;
-		int numItems = 100;
-		int capacity = 500;
-		Random rand = new Random(seed);
 		Item empty = new Item(0,0);
-		ArrayList<Item> sizeSmall = new ArrayList<Item>();
-		sizeSmall.add(empty);	//need to add Item with profit = 0 and weight = 0 to be the root node
-		for(int i = 0; i < numItems; i++){
-			Item temp = new Item(rand.nextInt(50)+1,rand.nextInt(50)+1);
-			sizeSmall.add(temp);
+		//c = 10, w = 1-c, p = 1-100, numItems = 10,100,1000,10000,100000
+		int seed = 1;
+		int numItems = 0;
+		int capacity = 0;
+		Random rand = new Random(seed);
+		for(int k = 10; k <= 1000; k = k*10){
+			capacity = k;
+			System.out.println("********************Capacity: " + capacity + "********************");
+			System.out.println("********************Weight: 1-" + capacity + "********************");
+			for(int j = 10; j <= 100000; j = j*10){
+				numItems = j;
+				ArrayList<Item> sizeSmall = new ArrayList<Item>();
+				sizeSmall.add(empty);	//need to add Item with profit = 0 and weight = 0 to be the root node
+				for(int i = 0; i < numItems; i++){
+					Item temp = new Item(rand.nextInt(capacity)+1,rand.nextInt(100)+1);
+					sizeSmall.add(temp);
+				}
+				long sortTimeStart = System.nanoTime();
+				Collections.sort(sizeSmall);
+				long sortTimeEnd = System.nanoTime();
+				long sortTime = sortTimeEnd - sortTimeStart;
+				Item small[] = new Item[sizeSmall.size()];
+				sizeSmall.toArray(small);
+				Backtracking test = new Backtracking(small,capacity);
+				long startTime = System.nanoTime();
+				test.backtrack(0,0,0);
+				long endTime = System.nanoTime();
+				long timeElapsed = endTime - startTime;
+				System.out.println("Number of items: " + numItems);
+				System.out.println("Max profit: " + test.maxprofit);
+				System.out.println("Execution Time (Nanoseconds): " + timeElapsed + " nanoseconds");
+				double seconds = (double)timeElapsed / 1_000_000_000.0;
+				System.out.println("Execution Time (Seconds): " + seconds + " seconds");
+				double sortSeconds = (double)sortTime / 1_000_000_000.0;
+				System.out.println("Execution Time Including Sort (Nanoseconds): " + (timeElapsed+sortTime) + " nanoseconds");
+				System.out.println("Execution Time Including Sort (Seconds): " + (seconds+sortSeconds) + " seconds");
+				System.out.println();
+			}
 		}
-		long sortTimeStart = System.nanoTime();
-		Collections.sort(sizeSmall);
-		long sortTimeEnd = System.nanoTime();
-		long sortTime = sortTimeEnd - sortTimeStart;
-		Item small[] = new Item[sizeSmall.size()];
-		sizeSmall.toArray(small);
-		Backtracking test = new Backtracking(small,capacity);
-		long startTime = System.nanoTime();
-		test.backtrack(0,0,0);
-		long endTime = System.nanoTime();
-		long timeElapsed = endTime - startTime;
-		System.out.println("Number of items: " + numItems);
-		System.out.println("Capacity: " + capacity);
-		System.out.println("Max profit: " + test.maxprofit);
-		System.out.println("Execution Time (Nanoseconds): " + timeElapsed + " nanoseconds");
-		double seconds = (double)timeElapsed / 1_000_000_000.0;
-		System.out.println("Execution Time (Seconds): " + seconds + " seconds");
-		double sortSeconds = (double)sortTime / 1_000_000_000.0;
-		System.out.println("Execution Time Including Sort (Nanoseconds): " + (timeElapsed+sortTime) + " nanoseconds");
-		System.out.println("Execution Time Including Sort (Seconds): " + (seconds+sortSeconds) + " seconds");
 		
 		//////////////////////////////TESTS//////////////////////////////
 		

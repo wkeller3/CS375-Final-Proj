@@ -1,3 +1,5 @@
+//Will Keller
+//CS 375 Presentation
 
 public class Item implements Comparable<Item>{
 	private int profit;
