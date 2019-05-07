@@ -20,19 +20,22 @@ public class Backtracking {
 
 	public double computeBound(int i, int weight, int profit){
 		double bound = profit;
-		double x[] = new double[items.length];
-		for(int j = i; j < items.length; j++){
-			x[j] = 0.0;
-		}
+		//double x[] = new double[items.length];
+		double x = 0.0;
+		//for(int j = i; j < items.length; j++){
+			//x[j] = 0.0;
+		//}
 		while((weight < c) && (i < items.length)){
 			if(weight+items[i].getWeight() <= c){
-				x[i] = 1;
+				//x[i] = 1;
 				weight = weight + items[i].getWeight();
 				bound = bound + items[i].getProfit();
 			} else{
-				x[i] = (double)(c-weight)/items[i].getWeight();
+				//x[i] = (double)(c-weight)/items[i].getWeight();
+				x = (double)(c-weight)/items[i].getWeight();
 				weight = c;
-				bound = bound + items[i].getProfit()*x[i];
+				//bound = bound + items[i].getProfit()*x[i];
+				bound = bound + items[i].getProfit()*x;
 			}
 			i = i+1;
 		}
